@@ -1,5 +1,9 @@
 from pathlib import Path
 import environ
+import logging
+import logging.config
+
+from django.utils.log import DEFAULT_LOGGING
 env = environ.Env(
     DEBUG=(bool, False)
 )
@@ -127,10 +131,7 @@ MEDIA_ROOT = BASE_DIR / "mediafiles"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-import logging
-import logging.config
-
-from django.utils.log import DEFAULT_LOGGING
+AUTH_USER_MODEL = 'users.User'
 
 logger = logging.getLogger(__name__)
 
