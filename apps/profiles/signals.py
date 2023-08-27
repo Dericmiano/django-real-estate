@@ -17,3 +17,4 @@ def create_user_profile(sender, instance, created, **kwargs):
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
     logger.info(f"{instance}'s profile created")
+# signals help automate creation of instances linked together
