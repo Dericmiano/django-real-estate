@@ -35,8 +35,12 @@ class Property(TimeStampedUUIDModel):
         COMMERCIAL = "Commercial", _("Commercial"),
         OTHER = "Other", _("Other"),
 
-    user = models.ForeignKey(User, verbose_name=("Agent, Seller or Buyer"),
-                             related_name="agent_buyer", on_delete=models.DO_NOTHING),
+    user = models.ForeignKey(
+        User,
+        verbose_name=_("Agent,Seller or Buyer"),
+        related_name="agent_buyer",
+        on_delete=models.DO_NOTHING,
+    )
     title = models.CharField(verbose_name=_("Property Title"), max_length=250)
     slug = AutoSlugField(populate_from="title", unique=True, always_update=True)
     ref_code = models.CharField(
@@ -68,7 +72,8 @@ class Property(TimeStampedUUIDModel):
     )
     plot_area = models.DecimalField(verbose_name=_("Plot Area(m^2)"), max_digits=8, decimal_places=2,
                                     default=0.0)
-    total_floors = models.IntegerField(verbose_name=_("Number of Floors"))
+    total_floors = models.IntegerField(verbose_name=_("Number of Floors"), default=1)
+    bedrooms = models.IntegerField(verbose_name=_("Bedrooms"), default=1)
     bathrooms = models.DecimalField(
         verbose_name=_("Bathrooms"), max_digits=4, decimal_places=2, default=1.0
     )
@@ -145,5 +150,5 @@ class PropertyViews(TimeStampedUUIDModel):
         )
 
     class Meta:
-        verbose_name = _("Total views on Property")
+        verbose_name = "Total views on Property"
         verbose_name_plural = "Total property Views"
