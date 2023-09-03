@@ -8,7 +8,7 @@ class Enquiry(TimeStampedUUIDModel):
     name = models.CharField(_('Your Name'), max_length=100)
     phone_number = PhoneNumberField(_('Phone Number'), max_length=30, default="+254707425566")
     email = models.EmailField(_("Email"))
-    subjects = models.CharField(_('Subject'), max_length=100)
+    subject = models.CharField(_('Subject'), max_length=100)
     message = models.TextField(_('Message'))
 
     def __str__(self):
