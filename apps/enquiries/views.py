@@ -28,5 +28,5 @@ def send_enquiry_email(request):
 
         return Response({"success": "Your Enquiry was successfully submitted"})
 
-    except:
-        return Response({"fail": "Enquiry was not sent. Please try again"})
+    except Exception as e:
+        return Response({"fail": f"Enquiry was not sent. Please try again ..{e}"})

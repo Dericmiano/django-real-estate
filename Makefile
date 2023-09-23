@@ -1,4 +1,4 @@
-ifneq (, $(wildcard ./.env))
+ifneq (,$(wildcard ./.env))
 include .env
 export
 ENV_FILE_PARAM = --env-file .env
@@ -48,20 +48,19 @@ flake8:
 	docker compose exec api flake8 .
 
 black-check:
-	docker compose exec api black --check --execlude=migrations .
+	docker compose exec api black --check --exclude=migrations --exclude=venv .
 
 black-diff:
-	docker compose exec api black --diff --execlude=migrations .
+	docker compose exec api black --diff --exclude=migrations --exclude=venv .
 
 black:
-	docker compose exec api black --execlude=migrations .
+	docker compose exec api black --exclude=migrations --exclude=venv .
 
 isort-check:
-	docker compose exec api isort . --check-only --skip env --skip migrations
+	docker compose exec api isort . --check-only --skip env --skip migrations --skip venv
 
 isort-diff:
-	docker compose exec api isort . --diff --skip env --skip migrations
+	docker compose exec api isort . --diff --skip env --skip migrations --skip venv
 
 isort:
-	docker compose exec api isort . --skip env --skip migrations
-
+	docker compose exec api isort . --skip env --skip migrations --skip venv
