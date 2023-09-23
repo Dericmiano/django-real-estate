@@ -4,12 +4,13 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 
 from apps.profiles.models import Profile
+
 from .models import Rating
 
 User = get_user_model()
 
 
-@api_view(['POST'])
+@api_view(["POST"])
 @permission_classes([permissions.IsAuthenticated])
 def create_agent_review(request, profile_id):
     agent_profile = Profile.objects.get(id=profile_id, is_agent=True)
@@ -21,7 +22,8 @@ def create_agent_review(request, profile_id):
         return Response(formatted_response, status=status.HTTP_400_BAD_REQUEST)
     # already_exist = agent_profile.agent_review.filter(profile_user.pkid).exist()
     already_exist = agent_profile.agent_review.filter(
-        agent__pkid=profile_user.pkid).exists()
+        agent__pkid=profile_user.pkid
+    ).exists()
     if already_exist:
         formatted_response = {"detail": "Profile already reviewed"}
         return Response(formatted_response, status=status.HTTP_400_BAD_REQUEST)
@@ -29,11 +31,11 @@ def create_agent_review(request, profile_id):
         formatted_response = {"detail": "Please select a rating"}
         return Response(formatted_response, status=status.HTTP_400_BAD_REQUEST)
     else:
-        review = Rating.objects.create(
+        Rating.objects.create(
             rater=request.user,
             agent=agent_profile,
-            rating=data['rating'],
-            comment=data['comment']
+            rating=data["rating"],
+            comment=data["comment"],
         )
         reviews = agent_profile.agent_review.all()
         agent_profile.num_reviews = len(reviews)

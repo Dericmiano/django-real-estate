@@ -1,18 +1,16 @@
-from django.shortcuts import render
 import logging
+
 import django_filters
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters, generics, permissions, status
-from rest_framework.decorators import APIView, permission_classes, api_view
+from rest_framework.decorators import APIView, api_view, permission_classes
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from .exceptions import PropertyNotFound
 from .models import Property, PropertyViews
 from .pagination import PropertyPagination
-from .serializers import (
-    PropertyCreateSerializer, PropertySerializer, PropertyViewSerializer)
-
+from .serializers import (PropertyCreateSerializer, PropertySerializer,
+                          PropertyViewSerializer)
 
 logger = logging.getLogger(__name__)
 
@@ -39,7 +37,9 @@ class ListAllPropertiesApiView(generics.ListAPIView):
     queryset = Property.objects.all().order_by("-created_at")
     pagination_class = PropertyPagination
     filter_backends = [
-        DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter
+        DjangoFilterBackend,
+        filters.SearchFilter,
+        filters.OrderingFilter,
     ]
     filterset_class = PropertyFilter
     search_fields = ["country", "city"]
@@ -51,7 +51,9 @@ class ListAgentsPropertyApiView(generics.ListAPIView):
     serializer_class = PropertySerializer
     pagination_class = PropertyPagination
     filter_backends = [
-        DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter
+        DjangoFilterBackend,
+        filters.SearchFilter,
+        filters.OrderingFilter,
     ]
     filterset_class = PropertyFilter
     search_fields = ["country", "city"]
@@ -69,7 +71,6 @@ class PropertyViewsApiView(generics.ListAPIView):
 
 
 class PropertyDetailView(APIView):
-
     def get(self, request, slug):
         property = Property.objects.get(slug=slug)
 
@@ -83,9 +84,7 @@ class PropertyDetailView(APIView):
             PropertyViews.objects.create(property=property, ip=ip)
             property.views += 1
             property.save()
-        serializer = PropertySerializer(property, context={
-            "request": request
-        })
+        serializer = PropertySerializer(property, context={"request": request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
@@ -99,14 +98,14 @@ def update_property_api_view(request, slug):
     user = request.user
     if property.user != user:
         return Response(
-            {"error": "You can not update or edit a property that does not belong to you"},
-            status=status.HTTP_403_FORBIDDEN
+            {
+                "error": "You can not update or edit a property that does not belong to you"
+            },
+            status=status.HTTP_403_FORBIDDEN,
         )
     if request.method == "PUT":
         data = request.data
-        serializer = PropertySerializer(
-            property, data, many=False
-        )
+        serializer = PropertySerializer(property, data, many=False)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
@@ -126,9 +125,7 @@ def create_property_api_view(request):
         )
         return Response(serializer.data)
 
-    return Response(
-        serializer.errors, status=status.HTTP_400_BAD_REQUEST
-    )
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(["DELETE"])
@@ -141,8 +138,10 @@ def delete_property_api_view(request, slug):
     user = request.user
     if property.user != user:
         return Response(
-            {"error": "You can not update or edit a property that does not belong to you"},
-            status=status.HTTP_403_FORBIDDEN
+            {
+                "error": "You can not update or edit a property that does not belong to you"
+            },
+            status=status.HTTP_403_FORBIDDEN,
         )
     if request.method == "DELETE":
         delete_operation = property.delete()

@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('properties', '0002_property_user'),
+        ("properties", "0002_property_user"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='property',
-            name='total_floors',
-            field=models.IntegerField(default=1, verbose_name='Number of Floors'),
+            model_name="property",
+            name="total_floors",
+            field=models.IntegerField(default=1, verbose_name="Number of Floors"),
         ),
     ]

@@ -9,14 +9,20 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('properties', '0001_initial'),
+        ("properties", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='property',
-            name='user',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.DO_NOTHING, related_name='agent_buyer', to='users.user', verbose_name='Agent,Seller or Buyer'),
+            model_name="property",
+            name="user",
+            field=models.ForeignKey(
+                default=1,
+                on_delete=django.db.models.deletion.DO_NOTHING,
+                related_name="agent_buyer",
+                to="users.user",
+                verbose_name="Agent,Seller or Buyer",
+            ),
             preserve_default=False,
         ),
     ]

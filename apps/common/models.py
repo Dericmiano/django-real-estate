@@ -1,4 +1,5 @@
 import uuid
+
 from django.db import models
 
 
@@ -10,5 +11,6 @@ class TimeStampedUUIDModel(models.Model):
 
     class Meta:
         abstract = True
+
 
 # Create your models here.

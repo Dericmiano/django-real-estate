@@ -27,9 +27,7 @@ class GetProfileApiView(APIView):
     def get(self, request):
         user = self.request.user
         user_profile = Profile.objects.get(user=user)
-        serializer = ProfileSerializer(user_profile, context={
-            "request": request
-        })
+        serializer = ProfileSerializer(user_profile, context={"request": request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
@@ -48,8 +46,9 @@ class UpdateProfileApiView(APIView):
         if username != username:
             raise NotYourProfile
         data = request.data
-        serializer = UpdateProfileSerializer(instance=request.user.profile,
-                                             data=data, partial=True)
+        serializer = UpdateProfileSerializer(
+            instance=request.user.profile, data=data, partial=True
+        )
         serializer.is_valid()
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
