@@ -14,4 +14,8 @@ RUN npm install
 
 COPY . ${APP_HOME}
 
+RUN chown -R node:node /app/node_modules
+
+USER node
+
 CMD ["npm","start"]
