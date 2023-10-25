@@ -5,6 +5,7 @@ import Spinner from '../components/Spinner'
 import {getProperties, reset} from '../features/properties/propertySlice'
 import {toast} from 'react-toastify'
 import Property from '../components/Property'
+import { Title } from '../components/Title'
 export const ProprtiesPage = () => {
     const {properties, isLoading, isError, message} = useSelector((state)=> state.properties)
     const dispatch = useDispatch()
@@ -20,6 +21,7 @@ export const ProprtiesPage = () => {
     }
   return (
     <>
+    <Title title="Our properties catalog"/>
     <Container>
         <Row>
             <Col className='mg-top text-centre'>
