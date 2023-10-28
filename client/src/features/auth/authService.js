@@ -39,5 +39,5 @@ const activate = async (userData) => {
     const response = await axios.post(ACTIVATE_URL, userData, config);
     return response.data
 }
-const authService = {register, login, activate}
+const authService = {register, login,logout, activate}
 export default authService;
